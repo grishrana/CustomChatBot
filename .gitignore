@@ -2,3 +2,6 @@
 test.*
 __pycache__
 .ipynb_checkpoints
+*.sqlite3
+
+
