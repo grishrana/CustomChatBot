@@ -9,3 +9,4 @@ class Prompts(models.Model):
 
     prompt = models.CharField(max_length=500)
     prompt_date = models.DateTimeField("date_prompted", default=timezone.now())
+    response = models.CharField(max_length=500, default="No response")

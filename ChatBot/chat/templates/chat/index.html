@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>This is a something</title>
+  </head>
+  <body>
+    <h1>CustomChatBot</h1>
+    <form action="/chat/conversation/", method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        {{field.as_field_group}}
+      {% endfor %}
+      <br>
+      <input type="submit">
+    </form>
+
+    <a href="/chat/history/"> <button type="submit">History</button> </a>
+  </body>
+</html>
