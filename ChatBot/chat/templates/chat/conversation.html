@@ -8,10 +8,14 @@
   <body>
     <h1>CustomChatBot</h1>
     <div class="prev_conv">
-      <b>You: </b> {{ prompt }} 
-      <br>
-      <b>ChatBot: </b> {{ output }}
+      {% for prompt_res in session_history %}
+        <b>You: </b> {{ prompt_res.prompt }} 
+        <br>
+        <b>ChatBot: </b> {{ prompt_res.response }}
+        <br>
+      {% endfor %}
     </div>
+    <hr>
     <div class="conv_form">
       <form action="/chat/conversation/" method="post">
         {% csrf_token %}

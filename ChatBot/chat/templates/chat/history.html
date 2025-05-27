@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chat History</title>
+
+  </head>
+  <body>
+    
+    {% for prompt_res in prompts_res %} 
+      <p>
+      <b>You: </b>{{ prompt_res.prompt }}
+      <br>
+      <b>Bot: </b>{{ prompt_res.response }}
+      </p>
+      <hr>
+    {% endfor %}
+
+    <form action="/chat/conversation/" method="post">
+      {% csrf_token %}
+
+      {{ conv_form.as_p }}
+      <input type="submit" name="Enter">
+      
+    </form>
+  </body>
+</html>

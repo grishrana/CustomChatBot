@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 from dotenv import load_dotenv
 from .forms import ConversationForm
@@ -8,6 +7,9 @@ from .models import Prompts
 
 # loading env
 load_dotenv()
+
+# list to store prompts and response till the program runs
+prompt_res_store = []
 
 # Create your views here.
 
@@ -37,17 +39,28 @@ def conversation(request):
 
             # saving prompt and response in database
             conv = Prompts(prompt=prompt, response=output)
+            prompt_res_store.append(conv)
             conv.save()
 
             # rendering
             return render(
                 request,
                 "chat/conversation.html",
-                context={"conv_form": conv_form, "prompt": prompt, "output": output},
+                context={
+                    "conv_form": conv_form,
+                    "prompt": prompt,
+                    "output": output,
+                    "session_history": prompt_res_store,
+                },
             )
 
 
 def history(request):
-    prev_prompts_list = Prompts.objects.order_by("prompt_date")
-    output = "\n".join([p.prompt for p in prev_prompts_list])
-    return HttpResponse(output)
+    prompts_res = Prompts.objects.all().order_by("prompt_date")
+    conv_form = ConversationForm()
+
+    return render(
+        request,
+        "chat/history.html",
+        context={"prompts_res": prompts_res, "conv_form": conv_form},
+    )
